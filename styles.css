@@ -1,0 +1,388 @@
+/* ============================================
+   GLOBAL RESETS & UTILITIES
+   ============================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+html {
+  hanging-punctuation: first last;
+}
+
+/* Media responsive */
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p {
+  max-width: 75ch;
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :has(:target) {
+    scroll-behavior: smooth;
+    scroll-padding-top: 3rem;
+  }
+}
+
+/* ============================================
+   CSS VARIABLES
+   ============================================ */
+
+:root {
+  --color-bg: #f1f0f5;
+  --color-surface: #ffffff;
+  --color-border: #e5e5e5;
+  --color-border-strong: rgba(0, 0, 0, 0.18);
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-text-muted: #a0a0a0;
+
+  /* Priority colors */
+  --color-high: #ff5642;
+  --color-high-bg: #ffeeed;
+  --color-medium: #ff963d;
+  --color-medium-bg: #fff3eb;
+  --color-low: #00c164;
+  --color-low-bg: #e4fbf2;
+
+  /* Status colors */
+  --color-pending: #6b6b6b;
+  --color-pending-bg: #f5f5f5;
+  --color-inprogress: #008eff;
+  --color-inprogress-bg: #e1f4ff;
+  --color-done: var(--color-low);
+  --color-done-bg: var(--color-low-bg);
+
+  --color-accent: var(--color-inprogress);
+  --color-overdue: var(--color-high);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  --font-body: 'Geist', sans-serif;
+
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* ============================================
+   BODY & HTML
+   ============================================ */
+
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================
+   ARTICLE: TODO CARD
+   ============================================ */
+
+.todo-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ============================================
+   HEADER: CARD-HEADER & BADGES
+   ============================================ */
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.badge-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+}
+
+.badge-high {
+  background: var(--color-high-bg);
+  color: var(--color-high);
+  border-color: rgba(192, 57, 43, 0.2);
+}
+
+.badge-medium {
+  background: var(--color-medium-bg);
+  color: var(--color-medium);
+  border-color: rgba(212, 136, 6, 0.2);
+}
+
+.badge-low {
+  background: var(--color-low-bg);
+  color: var(--color-low);
+  border-color: rgba(46, 125, 50, 0.2);
+}
+
+.badge-pending {
+  background: var(--color-pending-bg);
+  color: var(--color-pending);
+  border-color: rgba(107, 107, 107, 0.2);
+}
+
+.badge-inprogress {
+  background: var(--color-inprogress-bg);
+  color: var(--color-inprogress);
+  border-color: rgba(21, 101, 192, 0.2);
+}
+
+.badge-done {
+  background: var(--color-done-bg);
+  color: var(--color-done);
+  border-color: rgba(46, 125, 50, 0.2);
+}
+
+/* ============================================
+   CARD BODY & TASK STRUCTURE
+   ============================================ */
+
+.card-body {
+  display: flex;
+  gap: 8px;
+}
+
+.checkbox-wrapper {
+  padding-top: 3px;
+  flex-shrink: 0;
+}
+
+#todo-complete {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--color-accent);
+}
+
+#todo-complete:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.task-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+/* ============================================
+   TASK CONTENT: TITLE & DESCRIPTION
+   ============================================ */
+
+.todo-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+.todo-title.is-done {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.todo-description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+}
+
+/* ============================================
+   META BLOCK: DUE DATE & TIME REMAINING
+   ============================================ */
+
+.meta-block {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+}
+
+.meta-label {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.meta-value {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+}
+
+.meta-value.is-overdue {
+  color: var(--color-overdue);
+}
+
+.meta-value.is-soon {
+  color: #b45309;
+}
+
+/* ============================================
+   TAGS
+   ============================================ */
+
+.tags-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1.25rem;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+}
+
+/* ============================================
+   FOOTER: CARD ACTIONS & BUTTONS
+   ============================================ */
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover {
+  background: #f5f4f1;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-delete {
+  color: var(--color-overdue);
+  border-color: rgba(192, 57, 43, 0.25);
+}
+
+.btn-delete:hover {
+  background: var(--color-high-bg);
+}
+
+/* ============================================
+   RESPONSIVE MEDIA QUERIES
+   ============================================ */
+
+@media (max-width: 480px) {
+  body {
+    padding: 1rem 0.75rem;
+    align-items: flex-start;
+  }
+
+  .todo-card {
+    padding: 1.25rem;
+  }
+}
