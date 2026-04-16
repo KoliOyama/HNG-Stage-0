@@ -3,7 +3,7 @@
 A semantic, accessible, and responsive Todo Card built with plain HTML, CSS, and JavaScript. Submitted as Stage 0 of the HNG 14 Frontend Wizards track.
 
 ## Live URL
-[View on Vercel →](#) *(deployed URL)*
+[View on Vercel →](#) *(https://koli-task-card.vercel.app/)*
 
 ## Features
 - Checkbox toggles task completion — strikes through the title and updates the status badge
